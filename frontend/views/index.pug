@@ -1,0 +1,34 @@
+extends layout
+
+block content
+    h1(style="font-size: 3rem; color: #4CAF50; text-shadow: 4px 4px 8px #000000;")= title
+    h2(style="font-size: 3rem; color: #4CAF50; text-shadow: 4px 4px 8px #000000;")= heading
+    p(style="font-size: 1.8rem; color: #333; margin-bottom: 20px;") Welcome to #{title}, your one-stop destination for everything!
+
+    button(onclick="window.open('/users', '_blank', 'width=1024,height=768');" style="margin: 10px; padding: 15px 30px; font-size: 1.2rem; color: #fff; background-color: #4CAF50; border: none; border-radius: 8px; box-shadow: 2px 2px 5px #333; cursor: pointer; transition: background-color 0.2s;") Go to Users
+    button(onclick="location.href='/analytics';" style="margin: 10px; padding: 15px 30px; font-size: 1.2rem; color: #fff; background-color: #2196F3; border: none; border-radius: 8px; box-shadow: 2px 2px 5px #333; cursor: pointer; transition: background-color 0.2s;") Analytics
+    button(onclick="location.href='/profile';" style="margin: 10px; padding: 15px 30px; font-size: 1.2rem; color: #fff; background-color: #FF5722; border: none; border-radius: 8px; box-shadow: 2px 2px 5px #333; cursor: pointer; transition: background-color 0.2s;") My Profile
+
+    script.
+        function deleteUser(userId) {
+            if (confirm("Are you sure you want to delete this user? This action cannot be undone!")) {
+                fetch(`/users/${userId}`, {method: 'DELETE'})
+                    .then(response => {
+                        if (response.ok) {
+                            alert("User deleted successfully!");
+                            location.reload();
+                        } else {
+                            alert("Failed to delete user. Please try again.");
+                        }
+                    })
+                    .catch(err => console.error("Error deleting user:", err));
+            }
+        }
+
+    div(style="margin-top: 30px; text-align: center; font-size: 1.2rem;")
+        a(href="/settings" style="color: #007BFF; text-decoration: underline; font-weight: bold;") Go to Settings
+        |  |  
+        a(href="/help" style="color: #007BFF; text-decoration: underline; font-weight: bold;") Help & Support
+
+    footer(style="margin-top: 50px; text-align: center; font-size: 1rem; color: #777; padding: 20px; box-shadow: 0px 2px 5px rgba(0,0,0,0.1);")
+        | © #{new Date().getFullYear()} Your Amazing Website. All rights reserved.
